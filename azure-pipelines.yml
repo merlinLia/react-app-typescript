@@ -15,7 +15,6 @@ steps:
     npm start 
   displayName: 'npm install and build'
  
-steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)'
