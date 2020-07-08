@@ -20,7 +20,6 @@ steps:
     npm start
   displayName: 'npm install and build'
   
-- checkout: LayMui.react-app-test-automation
 - script: |
     npm install
     npm test
