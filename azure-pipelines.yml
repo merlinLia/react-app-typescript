@@ -12,7 +12,7 @@ steps:
 
 - script: |
     npm install
-    npm start 
+    npm start &
     echo Hello, world!
   displayName: 'npm install and build'
  
