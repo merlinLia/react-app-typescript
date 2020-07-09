@@ -26,7 +26,7 @@ steps:
 - checkout: react-app-test-automation
 - script: |
     npm install
-    npm test 
+    echo "HELLO WORLD!!!"
   displayName: 'npm install and my end to end automation test'
  
 # - task: PublishBuildArtifacts@1
