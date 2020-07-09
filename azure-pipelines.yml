@@ -2,7 +2,7 @@ resources:
   repositories:
   - repository: react-app-test-automation
     type: github
-    endpoint: github.com/LayMui
+    endpoint: LayMui
     name: LayMui/react-app-test-automation
  
 trigger:
