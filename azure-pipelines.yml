@@ -1,3 +1,15 @@
+resources:
+  repositories:
+  - repository: react-app-typescript # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: github.com/LayMui
+    name: LayMui/react-app-typescript
+  - repository: react-app-test-automation
+    type: github
+    endpoint: github.com/LayMui
+    name: LayMui/react-app-test-automation
+ 
+
 trigger:
 - master
 
@@ -5,6 +17,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- checkout: self
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
@@ -13,10 +26,16 @@ steps:
 - script: |
     npm install
     npm start &
-  displayName: 'npm install and build'
+  displayName: 'npm install and start the server running at localhost:3000'
+  
+- checkout: react-app-test-automation
+- script: |
+    npm install
+    npm test 
+  displayName: 'npm install and my end to end automation test'
  
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
-    ArtifactName: 'arti'
-    publishLocation: 'Container'
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(System.DefaultWorkingDirectory)'
+#     ArtifactName: 'arti'
+#     publishLocation: 'Container'
