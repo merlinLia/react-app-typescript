@@ -1,15 +1,10 @@
 resources:
   repositories:
-  - repository: react-app-typescript # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: github.com/LayMui
-    name: LayMui/react-app-typescript
   - repository: react-app-test-automation
     type: github
     endpoint: github.com/LayMui
     name: LayMui/react-app-test-automation
  
-
 trigger:
 - master
 
