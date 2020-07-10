@@ -27,7 +27,9 @@ steps:
 - script: |
     npm install
     npm test
+  workingDirectory: ($Build.SourcesDirectory)/ ##your repo name 
   displayName: 'npm install and my end to end automation test'
+
  
 # - task: PublishBuildArtifacts@1
 #   inputs:
