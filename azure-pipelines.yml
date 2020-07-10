@@ -21,6 +21,7 @@ steps:
 - script: |
     npm install
     npm start &
+  workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
   displayName: 'npm install and start the server running at localhost:3000'
   
 - checkout: react-app-test-automation
