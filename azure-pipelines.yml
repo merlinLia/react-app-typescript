@@ -27,7 +27,7 @@ steps:
 - script: |
     npm install
     npm test
-  workingDirectory: ($Build.SourcesDirectory)
+  workingDirectory: $(Build.SourcesDirectory)
   displayName: 'npm install and my end to end automation test'
 
  
