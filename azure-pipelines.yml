@@ -36,5 +36,5 @@ steps:
 #   inputs:
 #     PathtoPublish: '$(System.DefaultWorkingDirectory)'
 #     ArtifactName: 'arti'
-#     publishLocation: 'Container'
+#     publishLocation: 'Container' 
  
