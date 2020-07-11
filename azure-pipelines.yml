@@ -21,13 +21,14 @@ steps:
 - script: |
     npm install
     npm start &
+  workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
   displayName: 'npm install and start the server running at localhost:3000'
   
 - checkout: react-app-test-automation
 - script: |
     npm install
     npm test
-  workingDirectory: $(Build.SourcesDirectory)
+  workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
   displayName: 'npm install and my end to end automation test'
 
  
@@ -35,5 +36,5 @@ steps:
 #   inputs:
 #     PathtoPublish: '$(System.DefaultWorkingDirectory)'
 #     ArtifactName: 'arti'
-#     publishLocation: 'Container'
+#     publishLocation: 'Container' 
  
