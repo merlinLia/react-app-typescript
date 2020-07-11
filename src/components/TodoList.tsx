@@ -13,7 +13,7 @@ const TodoList: React.FC<TodoListProps> = props => {
       {props.items.map(todo => (
         <li key={todo.id}>
           <span>{todo.text}</span>
-          <button id='delete-btn' onClick={props.onDeleteTodo.bind(null, todo.id)}>
+          <button id='delete-btn' data-qa={"delete-" + todo.text} onClick={props.onDeleteTodo.bind(null, todo.id)}>
             DELETE
           </button>
         </li>
