@@ -33,7 +33,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)
+    sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
     contents: |
       target/site/serenity/**
     TargetFolder: $(Build.ArtifactStagingDirectory)
