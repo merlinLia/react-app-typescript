@@ -31,6 +31,17 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
   displayName: 'npm install and my end to end automation test'
 
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)
+    contents: |
+      target/site/serenity/**
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)
+    artifactName: target-folder
+ 
  
 # - task: PublishBuildArtifacts@1
 #   inputs:
