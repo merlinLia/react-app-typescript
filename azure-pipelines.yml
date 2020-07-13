@@ -83,8 +83,4 @@ stages:
                     targetPath: $(Build.ArtifactStagingDirectory)
                     artifactName: target-folder-IE
             
-        - job: create_test_reports_web
-          displayName: Create web with test reports
-          pool:
-            vmImage: 'ubuntu-latest'
-          dependsOn: Build
+       
