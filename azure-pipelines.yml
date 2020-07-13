@@ -9,10 +9,10 @@ trigger:
 - master
 
 stages:
-  -   stage: DevDeploy
-      displayName: DevDeploy
+  -   stage: Build
+      displayName: Build
       jobs:
-        -   job: DevDeploy
+        -   job: Build
             pool:
               vmImage: 'ubuntu-latest' 
 
@@ -28,7 +28,16 @@ stages:
                 npm start &
               workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
               displayName: 'npm install and start the server running at localhost:3000'
-              
+            
+  -   stage: DevDeploy
+      dependsOn: Build          
+      displayName: DevDeploy
+      jobs:
+        -   job: DevDeploy
+            pool:
+              vmImage: 'ubuntu-latest' 
+
+            steps:
             - checkout: react-app-test-automation
             - script: |
                 npm install
