@@ -43,7 +43,7 @@ stages:
                 npm install
                 npm test
               workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-              displayName: 'npm install and my end to end automation test in chrome'
+              displayName: 'npm install and my end to end automation test in chrome in Dev'
 
             - checkout: react-app-test-automation
             - task: CopyFiles@2
@@ -55,27 +55,34 @@ stages:
             - task: PublishPipelineArtifact@1
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
-                artifactName: target-folder
+                artifactName: target-folder-dev
 
-            # - checkout: react-app-test-automation
-            # - script: |
-            #       npm install
-            #       npm install -g webdriver-manager
-            #       webdriver-manager start &
-            #       npm run testIE
-            #   workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-            #   displayName: 'npm install and my end to end automation test on IE'
-        
-            # - checkout: react-app-test-automation
-            # - task: CopyFiles@2
-            #   inputs:
-            #     sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-            #     contents: |
-            #         target/site/serenity/**
-            #     TargetFolder: $(Build.ArtifactStagingDirectory)
-            # - task: PublishPipelineArtifact@1
-            #   inputs:
-            #     targetPath: $(Build.ArtifactStagingDirectory)
-            #     artifactName: target-folder-IE
-                
-       
+            
+  -   stage: QADeploy
+      dependsOn: Build          
+      displayName: QADeploy
+      jobs:
+        -   job: QADeploy
+            pool:
+              vmImage: 'ubuntu-latest' 
+
+            steps:
+            - checkout: react-app-test-automation
+            - script: |
+              npm install
+              npm test
+            workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+            displayName: 'npm install and my end to end automation test in chrome in QA'
+
+            - checkout: react-app-test-automation
+            - task: CopyFiles@2
+            inputs:
+              sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+              contents: |
+                target/site/serenity/**
+              TargetFolder: $(Build.ArtifactStagingDirectory)
+            - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)
+              artifactName: target-folder-QA
+
