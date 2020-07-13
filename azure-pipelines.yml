@@ -9,7 +9,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'vs2017-win2016'
 
 steps:
 - checkout: self
@@ -31,6 +31,7 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
   displayName: 'npm install and my end to end automation test'
 
+- checkout: react-app-test-automation
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
@@ -41,11 +42,23 @@ steps:
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)
     artifactName: target-folder
- 
- 
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(System.DefaultWorkingDirectory)'
-#     ArtifactName: 'arti'
-#     publishLocation: 'Container' 
+    
+- checkout: react-app-test-automation
+- script: |
+      npm install
+      npm run testIE
+  workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+  displayName: 'npm install and my end to end automation test on IE'
+  
+- checkout: react-app-test-automation
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+    contents: |
+        target/site/serenity/**
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+- task: PublishPipelineArtifact@1
+  inputs:
+      targetPath: $(Build.ArtifactStagingDirectory)
+      artifactName: target-folder-IE
  
