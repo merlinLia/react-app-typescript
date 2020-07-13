@@ -14,7 +14,7 @@ stages:
       jobs:
         -   job: Build
             pool:
-              vmImage: 'ubuntu-latest'
+              vmImage: 'vs2017-win2016'
 
             steps:
             - checkout: self
@@ -67,6 +67,8 @@ stages:
                 - checkout: react-app-test-automation
                 - script: |
                     npm install
+                    npm install -g webdriver-manager
+                    webdriver-manager start &
                     npm run testIE
                   workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
                   displayName: 'npm install and my end to end automation test on IE'
