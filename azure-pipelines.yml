@@ -9,8 +9,8 @@ trigger:
 - master
 
 stages:
-  -   stage: build_test_artifacts
-      displayName: Build_Test
+  -   stage: build_artifacts
+      displayName: Build
       jobs:
         -   job: Build
             pool:
@@ -48,8 +48,43 @@ stages:
                 targetPath: $(Build.ArtifactStagingDirectory)
                 artifactName: target-folder
 
+        -   job: BuildIE
+            pool:
+              vmImage: 'vs2017-win2016'
+              steps:
+                - checkout: self
+                - task: NodeTool@0
+                  inputs:
+                    versionSpec: '10.x'
+                  displayName: 'Install Node.js'
+    
+                - script: |
+                    npm install
+                    npm start &
+                  workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
+                  displayName: 'npm install and start the server running at localhost:3000'
+                  
+                - checkout: react-app-test-automation
+                - script: |
+                    npm install
+                    npm run testIE
+                  workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+                  displayName: 'npm install and my end to end automation test on IE'
+    
+                - checkout: react-app-test-automation
+                - task: CopyFiles@2
+                  inputs:
+                    sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+                    contents: |
+                      target/site/serenity/**
+                    TargetFolder: $(Build.ArtifactStagingDirectory)
+                - task: PublishPipelineArtifact@1
+                  inputs:
+                    targetPath: $(Build.ArtifactStagingDirectory)
+                    artifactName: target-folder-IE
+            
         - job: create_test_reports_web
           displayName: Create web with test reports
           pool:
             vmImage: 'ubuntu-latest'
-          dependsOn: BuildTest
+          dependsOn: Build
