@@ -177,8 +177,8 @@ stages:
         - QADeploy
       displayName: ProdDeploy
       jobs:
-        -   deployment: QADeploy
-            environment: QA
+        -   deployment: ProdDeploy
+            environment: Prod
             strategy: 
               runOnce:
                 deploy:
