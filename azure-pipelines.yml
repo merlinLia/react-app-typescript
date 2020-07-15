@@ -70,7 +70,7 @@ stages:
                  
               - task: AzureCLI@2
                 inputs:
-                  azureSubscription: 'Azure subscription 1 -demo'
+                  azureSubscription: 'Azure subscription 1 - demo'
                   scriptType: 'ps'
                   scriptLocation: 'inlineScript'
                   inlineScript: 'az webapp up -n react-app-todo -g demo -l southeastasia -p demo --html'
