@@ -48,43 +48,35 @@ stages:
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
                 artifactName: target-folder
+              
+        - job: create_test_reports_web
+          displayName: Create web with test reports
+          pool:
+            vmImage: 'ubuntu-latest'
+          dependsOn: Build
+          steps:
+              - task: DownloadPipelineArtifact@2
+                inputs:
+                  buildType: 'current'
+                  artifactName: 'target-folder'
+                  targetPath: '$(Pipeline.Workspace)'
       
-        # -   job: BuildIE
-        #     pool:
-        #         vmImage: 'vs2017-win2016' 
-    
-        #     steps:
-        #     - checkout: self
-        #     - task: NodeTool@0
-        #       inputs:
-        #         versionSpec: '10.x'
-        #       displayName: 'Install Node.js'
-    
-        #     - script: |
-        #         npm install
-        #         npm start &
-        #       workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
-        #       displayName: 'npm install and start the server running at localhost:3000'
-                
-        #     - checkout: react-app-test-automation
-        #     - script: |
-        #         npm install
-        #         npm test
-        #       workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-        #       displayName: 'npm install and my end to end automation test in IE'
-    
-        #     - checkout: react-app-test-automation
-        #     - task: CopyFiles@2
-        #       inputs:
-        #           sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-        #           contents: |
-        #               target/site/serenity/**
-        #           TargetFolder: $(Build.ArtifactStagingDirectory)
-        #     - task: PublishPipelineArtifact@1
-        #       inputs:
-        #           targetPath: $(Build.ArtifactStagingDirectory)
-        #           artifactName: target-folder-ie
-
+              - task: AzureCLI@2
+                inputs:
+                  azureSubscription: 'Sponsorship - demo'
+                  scriptType: 'ps'
+                  scriptLocation: 'inlineScript'
+                  inlineScript: 'az webapp delete -n react-app-typescript -g demo'
+                 
+              - task: AzureCLI@2
+                inputs:
+                  azureSubscription: 'Sponsorship - demo'
+                  scriptType: 'ps'
+                  scriptLocation: 'inlineScript'
+                  inlineScript: 'az webapp up -n react-app-typescript -g demo -l southeastasia -p demo --html'
+                  workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
+              
+       
   -   stage: DevDeploy
       dependsOn: Build
       displayName: DevDeploy
