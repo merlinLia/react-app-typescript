@@ -64,14 +64,14 @@ stages:
               - task: AzureCLI@2
                 inputs:
                   azureSubscription: 'Azure subscription 1 - demo'
-                  scriptType: 'ps'
+                  scriptType: 'pscore'
                   scriptLocation: 'inlineScript'
                   inlineScript: 'az webapp delete -n react-app-todo -g demo'
                  
               - task: AzureCLI@2
                 inputs:
                   azureSubscription: 'Azure subscription 1 - demo'
-                  scriptType: 'ps'
+                  scriptType: 'pscore'
                   scriptLocation: 'inlineScript'
                   inlineScript: 'az webapp up -n react-app-todo -g demo -l southeastasia -p demo --html'
                   workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
