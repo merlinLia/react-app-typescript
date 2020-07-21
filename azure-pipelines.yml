@@ -64,7 +64,7 @@ stages:
           displayName: Create web with test reports
           pool:
             vmImage: 'ubuntu-latest'
-          dependsOn: Build
+          dependsOn: Build_Test
           steps:
               - task: DownloadPipelineArtifact@2
                 inputs:
@@ -89,7 +89,7 @@ stages:
               
        
   -   stage: DevDeploy
-      dependsOn: Build
+      dependsOn: Build_Test
       displayName: DevDeploy
       jobs:
         -   deployment: DevDeploy
@@ -132,7 +132,7 @@ stages:
                         artifactName: source-folder-dev
 
   -   stage: QADeploy
-      dependsOn: Build
+      dependsOn: Build_Test
       displayName: QADeploy
       jobs:
         -   deployment: QADeploy
