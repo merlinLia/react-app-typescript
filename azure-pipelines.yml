@@ -42,6 +42,17 @@ stages:
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
                 contents: |
+                  **
+                TargetFolder: $(Build.ArtifactStagingDirectory)
+            - task: PublishPipelineArtifact@1
+              inputs:
+                targetPath: $(Build.ArtifactStagingDirectory)
+                artifactName: source-folder
+
+            - task: CopyFiles@2
+              inputs:
+                sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+                contents: |
                   target/site/serenity/**
                 TargetFolder: $(Build.ArtifactStagingDirectory)
             - task: PublishPipelineArtifact@1
