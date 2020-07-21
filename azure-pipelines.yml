@@ -10,10 +10,10 @@ trigger:
 
 
 stages:
-  -   stage: Build
-      displayName: Build
+  -   stage: build_test_artifacts
+      displayName: Build and Test artifacts
       jobs:
-        -   job: Build
+        -   job: Build_Test
             pool:
               vmImage: 'ubuntu-latest'
 
@@ -124,12 +124,12 @@ stages:
                       inputs:
                         sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
                         contents: |
-                          target/site/serenity/**
+                          **
                         TargetFolder: $(Build.ArtifactStagingDirectory)
                     - task: PublishPipelineArtifact@1
                       inputs:
                         targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: target-folder-dev
+                        artifactName: source-folder-dev
 
   -   stage: QADeploy
       dependsOn: Build
@@ -167,12 +167,12 @@ stages:
                       inputs:
                         sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
                         contents: |
-                          target/site/serenity/**
+                          **
                         TargetFolder: $(Build.ArtifactStagingDirectory)
                     - task: PublishPipelineArtifact@1
                       inputs:
                         targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: target-folder-qa
+                        artifactName: source-folder-qa
 
   -   stage: ProdDeploy
       dependsOn: 
@@ -212,11 +212,11 @@ stages:
                       inputs:
                         sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
                         contents: |
-                          target/site/serenity/**
+                          **
                         TargetFolder: $(Build.ArtifactStagingDirectory)
                     - task: PublishPipelineArtifact@1
                       inputs:
                         targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: target-folder-prod
+                        artifactName: source-folder-prod
                             
   
