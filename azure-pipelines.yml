@@ -8,7 +8,6 @@ resources:
 trigger:
 - master
 
-
 stages:
   -   stage: Build_Test
       displayName: Build and Test artifacts
@@ -30,6 +29,21 @@ stages:
               workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
               displayName: 'npm install and start the server running at localhost:3000'
             
+            - task: CopyFiles@2
+              inputs:
+                sourceFolder: $(Build.SourcesDirectory)/react-app-typescript
+                contents: |
+                  **
+                TargetFolder: $(Build.ArtifactStagingDirectory)
+            - task: PublishPipelineArtifact@1
+              inputs:
+                targetPath: $(Build.ArtifactStagingDirectory)
+                artifactName: app-source-folder
+
+            - task: PublishPipelineArtifact@1
+              inputs:
+                targetPath: $(Build.ArtifactStagingDirectory)
+                artifactName: source-folder
             - checkout: react-app-test-automation
             - script: |
                 npm install
@@ -47,19 +61,8 @@ stages:
             - task: PublishPipelineArtifact@1
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
-                artifactName: source-folder
-
-            # - task: CopyFiles@2
-            #   inputs:
-            #     sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-            #     contents: |
-            #       target/site/serenity/**
-            #     TargetFolder: $(Build.ArtifactStagingDirectory)
-            # - task: PublishPipelineArtifact@1
-            #   inputs:
-            #     targetPath: $(Build.ArtifactStagingDirectory)
-            #     artifactName: target-folder
-              
+                artifactName: test-source-folder
+             
         - job: create_test_reports_web
           displayName: Create web with test reports
           pool:
@@ -69,7 +72,7 @@ stages:
               - task: DownloadPipelineArtifact@2
                 inputs:
                   buildType: 'current'
-                  artifactName: 'source-folder'
+                  artifactName: 'test-source-folder'
                   targetPath: '$(Pipeline.Workspace)'
       
               - task: AzureCLI@2
