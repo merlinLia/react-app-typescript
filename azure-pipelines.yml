@@ -69,7 +69,7 @@ stages:
               - task: DownloadPipelineArtifact@2
                 inputs:
                   buildType: 'current'
-                  artifactName: 'target-folder'
+                  artifactName: 'source-folder'
                   targetPath: '$(Pipeline.Workspace)'
       
               - task: AzureCLI@2
