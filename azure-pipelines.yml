@@ -43,7 +43,7 @@ stages:
             - task: PublishPipelineArtifact@1
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
-                artifactName: source-folder
+                artifactName: test-source-folder
             - checkout: react-app-test-automation
             - script: |
                 npm install
@@ -91,135 +91,135 @@ stages:
                   workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
               
        
-  -   stage: DevDeploy
-      dependsOn: Build_Test
-      displayName: DevDeploy
-      jobs:
-        -   deployment: DevDeploy
-            environment: Dev
-            strategy: 
-              runOnce:
-                deploy:
-                  pool:
-                    vmImage: 'ubuntu-latest' 
-                  steps:
-                    - checkout: self
-                    - task: NodeTool@0
-                      inputs:
-                        versionSpec: '10.x'
-                      displayName: 'Install Node.js'
+  # -   stage: DevDeploy
+  #     dependsOn: Build_Test
+  #     displayName: DevDeploy
+  #     jobs:
+  #       -   deployment: DevDeploy
+  #           environment: Dev
+  #           strategy: 
+  #             runOnce:
+  #               deploy:
+  #                 pool:
+  #                   vmImage: 'ubuntu-latest' 
+  #                 steps:
+  #                   - checkout: self
+  #                   - task: NodeTool@0
+  #                     inputs:
+  #                       versionSpec: '10.x'
+  #                     displayName: 'Install Node.js'
 
-                    - script: |
-                        npm install
-                        npm start & 
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
-                      displayName: 'npm install and start the server running at localhost:3000'
+  #                   - script: |
+  #                       npm install
+  #                       npm start & 
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
+  #                     displayName: 'npm install and start the server running at localhost:3000'
               
-                    - checkout: react-app-test-automation
-                    - script: |
-                        npm install
-                        npm test
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-                      displayName: 'npm install and my end to end automation test in chrome in dev'
+  #                   - checkout: react-app-test-automation
+  #                   - script: |
+  #                       npm install
+  #                       npm test
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+  #                     displayName: 'npm install and my end to end automation test in chrome in dev'
 
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-dev
+  #                   - checkout: react-app-test-automation
+  #                   - task: CopyFiles@2
+  #                     inputs:
+  #                       sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+  #                       contents: |
+  #                         **
+  #                       TargetFolder: $(Build.ArtifactStagingDirectory)
+  #                   - task: PublishPipelineArtifact@1
+  #                     inputs:
+  #                       targetPath: $(Build.ArtifactStagingDirectory)
+  #                       artifactName: source-folder-dev
 
-  -   stage: QADeploy
-      dependsOn: Build_Test
-      displayName: QADeploy
-      jobs:
-        -   deployment: QADeploy
-            environment: QA
-            strategy: 
-              runOnce:
-                deploy:
-                  pool:
-                    vmImage: 'ubuntu-latest' 
-                  steps:
-                    - checkout: self
-                    - task: NodeTool@0
-                      inputs:
-                        versionSpec: '10.x'
-                      displayName: 'Install Node.js'
+  # -   stage: QADeploy
+  #     dependsOn: Build_Test
+  #     displayName: QADeploy
+  #     jobs:
+  #       -   deployment: QADeploy
+  #           environment: QA
+  #           strategy: 
+  #             runOnce:
+  #               deploy:
+  #                 pool:
+  #                   vmImage: 'ubuntu-latest' 
+  #                 steps:
+  #                   - checkout: self
+  #                   - task: NodeTool@0
+  #                     inputs:
+  #                       versionSpec: '10.x'
+  #                     displayName: 'Install Node.js'
 
-                    - script: |
-                        npm install
-                        npm start &
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
-                      displayName: 'npm install and start the server running at localhost:3000'
+  #                   - script: |
+  #                       npm install
+  #                       npm start &
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
+  #                     displayName: 'npm install and start the server running at localhost:3000'
           
-                    - checkout: react-app-test-automation
-                    - script: |
-                        npm install
-                        npm test
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-                      displayName: 'npm install and my end to end automation test in chrome in qa'
+  #                   - checkout: react-app-test-automation
+  #                   - script: |
+  #                       npm install
+  #                       npm test
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+  #                     displayName: 'npm install and my end to end automation test in chrome in qa'
 
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-qa
+  #                   - checkout: react-app-test-automation
+  #                   - task: CopyFiles@2
+  #                     inputs:
+  #                       sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+  #                       contents: |
+  #                         **
+  #                       TargetFolder: $(Build.ArtifactStagingDirectory)
+  #                   - task: PublishPipelineArtifact@1
+  #                     inputs:
+  #                       targetPath: $(Build.ArtifactStagingDirectory)
+  #                       artifactName: source-folder-qa
 
-  -   stage: ProdDeploy
-      dependsOn: 
-        - DevDeploy
-        - QADeploy
-      displayName: ProdDeploy
-      jobs:
-        -   deployment: ProdDeploy
-            environment: Prod
-            strategy: 
-              runOnce:
-                deploy:
-                  pool:
-                    vmImage: 'ubuntu-latest' 
-                  steps:
-                    - checkout: self
-                    - task: NodeTool@0
-                      inputs:
-                        versionSpec: '10.x'
-                      displayName: 'Install Node.js'
+  # -   stage: ProdDeploy
+  #     dependsOn: 
+  #       - DevDeploy
+  #       - QADeploy
+  #     displayName: ProdDeploy
+  #     jobs:
+  #       -   deployment: ProdDeploy
+  #           environment: Prod
+  #           strategy: 
+  #             runOnce:
+  #               deploy:
+  #                 pool:
+  #                   vmImage: 'ubuntu-latest' 
+  #                 steps:
+  #                   - checkout: self
+  #                   - task: NodeTool@0
+  #                     inputs:
+  #                       versionSpec: '10.x'
+  #                     displayName: 'Install Node.js'
 
-                    - script: |
-                        npm install
-                        npm start &
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
-                      displayName: 'npm install and start the server running at localhost:3000'
+  #                   - script: |
+  #                       npm install
+  #                       npm start &
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-typescript
+  #                     displayName: 'npm install and start the server running at localhost:3000'
       
-                    - checkout: react-app-test-automation
-                    - script: |
-                        npm install
-                        npm test
-                      workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
-                      displayName: 'npm install and my end to end automation test in chrome in prod'
+  #                   - checkout: react-app-test-automation
+  #                   - script: |
+  #                       npm install
+  #                       npm test
+  #                     workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
+  #                     displayName: 'npm install and my end to end automation test in chrome in prod'
 
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-prod
+  #                   - checkout: react-app-test-automation
+  #                   - task: CopyFiles@2
+  #                     inputs:
+  #                       sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+  #                       contents: |
+  #                         **
+  #                       TargetFolder: $(Build.ArtifactStagingDirectory)
+  #                   - task: PublishPipelineArtifact@1
+  #                     inputs:
+  #                       targetPath: $(Build.ArtifactStagingDirectory)
+  #                       artifactName: source-folder-prod
                             
   
