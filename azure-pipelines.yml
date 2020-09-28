@@ -47,6 +47,7 @@ stages:
             - checkout: react-app-test-automation
             - script: |
                 npm install
+                npm run postinstall
                 npm test
               workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
               displayName: 'npm install and my end to end automation test in chrome'
