@@ -122,18 +122,7 @@ stages:
                       workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
                       displayName: 'npm install and my end to end automation test in chrome in dev'
 
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-dev
-
+  
   -   stage: QADeploy
       dependsOn: Build_Test
       displayName: QADeploy
@@ -164,18 +153,6 @@ stages:
                         npm test
                       workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
                       displayName: 'npm install and my end to end automation test in chrome in qa'
-
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-qa
 
   -   stage: ProdDeploy
       dependsOn: 
@@ -210,16 +187,16 @@ stages:
                       workingDirectory: $(Build.SourcesDirectory)/react-app-test-automation
                       displayName: 'npm install and my end to end automation test in chrome in prod'
 
-                    - checkout: react-app-test-automation
-                    - task: CopyFiles@2
-                      inputs:
-                        sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
-                        contents: |
-                          **
-                        TargetFolder: $(Build.ArtifactStagingDirectory)
-                    - task: PublishPipelineArtifact@1
-                      inputs:
-                        targetPath: $(Build.ArtifactStagingDirectory)
-                        artifactName: source-folder-prod
+                    # - checkout: react-app-test-automation
+                    # - task: CopyFiles@2
+                    #   inputs:
+                    #     sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
+                    #     contents: |
+                    #       **
+                    #     TargetFolder: $(Build.ArtifactStagingDirectory)
+                    # - task: PublishPipelineArtifact@1
+                    #   inputs:
+                    #     targetPath: $(Build.ArtifactStagingDirectory)
+                    #     artifactName: source-folder-prod
                             
   
