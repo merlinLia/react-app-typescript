@@ -43,7 +43,7 @@ stages:
             - task: PublishPipelineArtifact@1
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
-                artifactName: app-source-folder
+                artifactName: test-source-folder
             - checkout: react-app-test-automation
             - script: |
                 npm install
@@ -89,8 +89,7 @@ stages:
                   scriptLocation: 'inlineScript'
                   inlineScript: 'az webapp up -n react-app-todo -g demo -l southeastasia -p demo --html'
                   workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
-              
-       
+                 
   -   stage: DevDeploy
       dependsOn: Build_Test
       displayName: DevDeploy
