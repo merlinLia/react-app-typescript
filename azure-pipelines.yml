@@ -40,10 +40,10 @@ stages:
                 targetPath: $(Build.ArtifactStagingDirectory)
                 artifactName: app-source-folder
 
-            # - task: PublishPipelineArtifact@1
-            #   inputs:
-            #     targetPath: $(Build.ArtifactStagingDirectory)
-            #     artifactName: test-source-folder
+            - task: PublishPipelineArtifact@1
+              inputs:
+                targetPath: $(Build.ArtifactStagingDirectory)
+                artifactName: test-source-folder
             - checkout: react-app-test-automation
             - script: |
                 npm install
