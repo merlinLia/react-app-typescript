@@ -45,10 +45,14 @@ stages:
             #     targetPath: $(Build.ArtifactStagingDirectory)
             #     artifactName: test-source-folder
             - checkout: react-app-test-automation
-            - script: |
-                npm install
-                npm run postinstall
-                npm test
+            - task: Bash@3
+              inputs:
+                  targetType: 'inline'
+                  script: |
+                    npm install
+                    npm run postinstall
+                    npm test
+
             - task: CopyFiles@2
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/react-app-test-automation
