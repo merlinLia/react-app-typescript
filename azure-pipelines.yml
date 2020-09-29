@@ -77,7 +77,13 @@ stages:
                   scriptType: 'pscore'
                   scriptLocation: 'inlineScript'
                   inlineScript: 'az webapp delete -n react-app-todo -g demo'
-                 
+
+              - task: DownloadPipelineArtifact@2
+                inputs:
+                    buildType: 'current'
+                    artifactName: 'test-source-folder'
+                    targetPath: '$(Pipeline.Workspace)'
+              
               - task: AzureCLI@2
                 inputs:
                   azureSubscription: 'Azure subscription 1 - demo'
