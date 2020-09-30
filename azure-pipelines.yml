@@ -39,6 +39,8 @@ stages:
               inputs:
                 targetPath: $(Build.ArtifactStagingDirectory)
                 artifactName: app-source-folder
+            - script: |
+                  rmdir $(Build.ArtifactStagingDirectory)
 
             - checkout: react-app-test-automation
             - script: |
