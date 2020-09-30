@@ -3,7 +3,7 @@ resources:
   - repository: react-app-test-automation
     type: github
     endpoint: merlinLia (1)
-    name: merlinLia (1)/react-app-test-automation
+    name: merlinLia/react-app-test-automation
  
 trigger:
 - master
