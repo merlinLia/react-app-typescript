@@ -2,8 +2,8 @@ resources:
   repositories:
   - repository: react-app-test-automation
     type: github
-    endpoint: LayMui
-    name: LayMui/react-app-test-automation
+    endpoint: merlinLia (1)
+    name: merlinLia (1)/react-app-test-automation
  
 trigger:
 - master
@@ -71,12 +71,12 @@ stages:
                   artifactName: 'test-source-folder'
                   targetPath: '$(Pipeline.Workspace)'
       
-              - task: AzureCLI@2
-                inputs:
-                  azureSubscription: 'Azure subscription 1 - demo'
-                  scriptType: 'pscore'
-                  scriptLocation: 'inlineScript'
-                  inlineScript: 'az webapp delete -n react-app-todo -g demo'
+              # - task: AzureCLI@2
+              #   inputs:
+              #     azureSubscription: 'Azure subscription 1 - demo'
+              #     scriptType: 'pscore'
+              #     scriptLocation: 'inlineScript'
+              #     inlineScript: 'az webapp delete -n react-app-todo -g demo'
 
               - task: DownloadPipelineArtifact@2
                 inputs:
@@ -84,13 +84,13 @@ stages:
                     artifactName: 'test-source-folder'
                     targetPath: '$(Pipeline.Workspace)'
               
-              - task: AzureCLI@2
-                inputs:
-                  azureSubscription: 'Azure subscription 1 - demo'
-                  scriptType: 'pscore'
-                  scriptLocation: 'inlineScript'
-                  inlineScript: 'az webapp up -n react-app-todo -g demo -l southeastasia -p demo --html'
-                  workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
+              # - task: AzureCLI@2
+              #   inputs:
+              #     azureSubscription: 'Azure subscription 1 - demo'
+              #     scriptType: 'pscore'
+              #     scriptLocation: 'inlineScript'
+              #     inlineScript: 'az webapp up -n react-app-todo -g demo -l southeastasia -p demo --html'
+              #     workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
                  
   -   stage: DevDeploy
       dependsOn: Build_Test
