@@ -14,8 +14,8 @@ stages:
       jobs:
         -   job: Build_Test
             pool:
-              vmImage: 'ubuntu-latest'
-
+              # vmImage: 'ubuntu-latest'
+             name: default
             steps:
             - checkout: self
             - task: NodeTool@0
@@ -62,7 +62,8 @@ stages:
         - job: create_test_reports_web
           displayName: Create web with test reports
           pool:
-            vmImage: 'ubuntu-latest'
+            # vmImage: 'ubuntu-latest'
+            name: default
           dependsOn: Build_Test
           steps:
               - task: DownloadPipelineArtifact@2
@@ -102,7 +103,8 @@ stages:
               runOnce:
                 deploy:
                   pool:
-                    vmImage: 'ubuntu-latest' 
+                    # vmImage: 'ubuntu-latest' 
+                    name: default
                   steps:
                     - checkout: self
                     - task: NodeTool@0
@@ -134,7 +136,8 @@ stages:
               runOnce:
                 deploy:
                   pool:
-                    vmImage: 'ubuntu-latest' 
+                    # vmImage: 'ubuntu-latest' 
+                    name: default
                   steps:
                     - checkout: self
                     - task: NodeTool@0
@@ -167,7 +170,8 @@ stages:
               runOnce:
                 deploy:
                   pool:
-                    vmImage: 'ubuntu-latest' 
+                    # vmImage: 'ubuntu-latest' 
+                    name: default
                   steps:
                     - checkout: self
                     - task: NodeTool@0
