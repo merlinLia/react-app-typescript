@@ -40,7 +40,7 @@ stages:
                 targetPath: $(Build.ArtifactStagingDirectory)
                 artifactName: app-source-folder
             - script: |
-                  rmdir /s /q $(Build.ArtifactStagingDirectory)
+                  rm -r $(Build.ArtifactStagingDirectory)
 
             - checkout: react-app-test-automation
             - script: |
