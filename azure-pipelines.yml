@@ -92,7 +92,7 @@ stages:
                   azureSubscription: 'azuremerlin'
                   scriptType: 'pscore'
                   scriptLocation: 'inlineScript'
-                  inlineScript: 'az webapp up -n merlinappbc -g Wicresoft-Support -l southeastasia -p ASP-WicresoftSupport-9535 --html'
+                  inlineScript: 'az webapp up -n merlinappbc -g Wicresoft-Support -l southeastasia -p ASP-WicresoftSupport-ade4 --html'
                   workingDirectory: '$(Pipeline.Workspace)/target/site/serenity'
                  
   -   stage: DevDeploy
